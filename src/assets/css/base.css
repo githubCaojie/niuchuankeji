@@ -2,93 +2,118 @@
 @import "https://at.alicdn.com/t/font_2546450_63xudp4s36h.css";
 
 /*:root -> 获取根元素html*/
+
 :root {
-  --color-text: #333;
-  --color-high-text: #005389;
-  --color-tint: #005389;
-  --color-background: #fff;
-  --font-size: 14px;
-  --line-height: 1.5;
+    --white-font-clolr: #ffffff;
+    --color-high-text: #005389;
+    --color-tint: #005389;
+    --color-background: #fff;
+    --home-content-background: #034db6;
+    --home-element-background: #034db6;
+    --body-font-size: 12px;
+    --line-height: 1.5;
 }
 
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  list-style: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
 }
 
 body {
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-  user-select: none; /* 禁止用户鼠标在页面上选中文字/图片等 */
-  -webkit-tap-highlight-color: transparent; /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
-  background: var(--color-background);
-  color: var(--color-text);
-  /* rem vw/vh */
-  width: 100vw;
-  font-family: "Microsoft YaHei";
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    user-select: none;
+    /* 禁止用户鼠标在页面上选中文字/图片等 */
+    -webkit-tap-highlight-color: transparent;
+    /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
+    background: var(--color-background);
+    color: var(--color-text);
+    /* rem vw/vh */
+    width: 100vw;
+    font-family: "Microsoft YaHei";
 }
 
 a {
-  color: var(--color-text);
-  text-decoration: none;
+    color: var(--color-text);
+    text-decoration: none;
 }
 
-button, input, select, textarea {
-  border: none;
-  margin: 0;
-  outline: none;
-  padding: 0;
-  background: none;
+button,
+input,
+select,
+textarea {
+    border: none;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    background: none;
 }
 
 button {
-  -webkit-appearance: button;
-  -webkit-writing-mode: horizontal-tb!important;
-  text-rendering: auto;
-  letter-spacing: normal;
-  word-spacing: normal;
-  text-transform: none;
-  text-indent: 0;
-  text-shadow: none;
-  display: inline-block;
-  text-align: center;
-  align-items: flex-start;
-  cursor: default;
-  box-sizing: border-box;
-  margin: 0;
+    -webkit-appearance: button;
+    -webkit-writing-mode: horizontal-tb!important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    box-sizing: border-box;
+    margin: 0;
 }
 
 img {
-  border: none;
-  display: block;
+    border: none;
+    display: block;
 }
 
-::-webkit-scrollbar { display: none; }
+::-webkit-scrollbar {
+    display: none;
+}
+
 
 /* 小尺寸*/
+
+
 /* hidden-xs hidden-sm */
-@media (max-width: 768px){
-  .hidden-xs {
-    display: none !important;
-  }
+
+@media (max-width: 768px) {
+    .hidden-xs {
+        display: none !important;
+    }
 }
-@media (min-width: 768px) and (max-width: 991px){
-  .hidden-sm {
-    display: none !important;
-  }
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .hidden-sm {
+        display: none !important;
+    }
 }
+
+
 /* 大尺寸 */
+
+
 /* hidden-md hidden-lg */
-@media (min-width: 992px) and (max-width: 1199px){
-  .hidden-md {
-      display: none !important;
-  }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .hidden-md {
+        display: none !important;
+    }
 }
-@media (min-width: 1200px){
-  .hidden-lg {
-    display: none !important;
-  }
+
+@media (min-width: 1200px) {
+    .hidden-lg {
+        display: none !important;
+    }
+}
+
+p.img {
+    font-size: 0;
 }
