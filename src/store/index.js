@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    
+    isMobile: false
   },
   mutations: {
-    updateIsMobileBoolean (state,Boolean) {
-      state.isMobile = Boolean
+    judgeIsMobile (state, type) {
+      state.isMobile = type;
     }
   },
   actions: {

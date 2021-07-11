@@ -1,0 +1,38 @@
+<template>
+  <div class="benner">
+    <van-swipe :autoplay="3000" indicator-color="white">
+      <van-swipe-item v-for="item in banners" :key="item.id">
+        <a @click.prevent="bannerClick(item.urlpath)">
+          <p class="img">
+            <van-image width="100%" fit="cover" :src="item.image"/>
+          </p>
+        </a>
+      </van-swipe-item>
+    </van-swipe>
+  </div>
+</template>
+
+<script>
+import { Swipe, SwipeItem, Image as VanImage } from 'vant';
+export default {
+  props: {
+    banners: {
+      type: Array,
+      default() {
+        return [];
+      }
+    }
+  },
+  components: {
+    [Swipe.name]: Swipe,
+    [SwipeItem.name]: SwipeItem,
+    [VanImage.name]: VanImage
+  },
+}
+</script>
+
+<style lang="less" scoped>
+.benner {
+  margin-top: 1.2rem;
+}
+</style>

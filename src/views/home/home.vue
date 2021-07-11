@@ -1,50 +1,54 @@
 <template>
   <div>
-    <home-banner :banners="banners"/>
-    <home-product :product="product"/>
-    <home-cases :cases="cases"/>
-    <home-news :news="news"/>
-    <home-about/>
-    <home-cooperation :copperation="copperation"/>
+    <pc-home
+      v-if="$store.state.isMobile"
+      :banners="banners"
+      :product="product"
+      :cases="cases"
+      :news="news"
+      :company="company"
+      :copperation="copperation"
+    />
+    <m-home
+      v-else
+      :banners="banners"
+      :product="product"
+      :cases="cases"
+      :news="news"
+      :company="company"
+      :copperation="copperation"
+    />
   </div>
 </template>
 
 <script>
-import HomeBanner from './childComps/HomeBanner';
-import HomeProduct from './childComps/HomeProduct';
-import HomeCases from './childComps/HomeCases'
-import HomeNews from './childComps/HomeNews';
-import HomeAbout from './childComps/HomeAbout';
-import HomeCooperation from './childComps/HomeCooperation'
+import pcHome from './pc/pcHome';
+import mHome from './m/mHome'
 
-import { getHomeBanner, getHomeProduct, getHomeCases, getHomeNews, getCopperation } from '../../network/home';
+import { getHomeBanner, getHomeProduct, getHomeCases, getHomeNews, getCompany, getCopperation } from '../../network/home';
 
 export default {
-  name: 'Home',
   components: {
-    HomeBanner,
-    HomeProduct,
-    HomeCases,
-    HomeNews,
-    HomeAbout,
-    HomeCooperation
+    pcHome,
+    mHome,
   },
-  data() {
+  data () {
     return {
       banners: [],
       product: [],
       cases: [],
       news: [],
+      company: {},
       copperation: []
     }
   },
   created() {
-    // 请求数据
     this.getHomeBanner();
     this.getHomeProduct();
     this.getHomeCases();
     this.getHomeNews();
-    this.getCopperation()
+    this.getCompany();
+    this.getCopperation();
   },
   methods: {
     getHomeBanner () {
@@ -54,7 +58,7 @@ export default {
     },
     getHomeProduct() {
       getHomeProduct().then(res => {
-        this.product = res.data.list
+        this.product = res.data.splice(0,4)
       })
     },
     getHomeCases() {
@@ -64,12 +68,17 @@ export default {
     },
     getHomeNews() {
       getHomeNews().then(res => {
-        this.news = res.data.list;
+        this.news = res.data.splice(0,3);
+      })
+    },
+    getCompany() {
+      getCompany().then(res => {
+        console.log(res)
+        this.company = res.data[0];
       })
     },
     getCopperation() {
       getCopperation().then(res => {
-        console.log(res.data)
         this.copperation = res.data;
       })
     }
@@ -77,5 +86,6 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style>
+
 </style>

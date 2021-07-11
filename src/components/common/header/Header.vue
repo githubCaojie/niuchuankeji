@@ -1,14 +1,11 @@
 <template>
-  <!-- header -->
-  <div class="header-box">
-    <header>
-      <!-- logo -->
-      <a class="logo" href="javascript:;">
-        <img src="../../../assets/img/logo.png"/>
-        <span>纽川技术有限公司</span>
-      </a>
-      <!-- 导航 -->
-      <div class="pc hidden-xs hidden-sm">
+  <div class="header">
+    <header v-if="$store.state.isMobile">
+      <div class="pc">
+        <a class="logo" href="javascript:;">
+          <img src="../../../assets/img/logo.png"/>
+          <span>纽川技术有限公司</span>
+        </a>
         <el-menu
           :default-active="activeIndex"
           class="el-menu-demo"
@@ -16,24 +13,43 @@
           background-color="transparent"
           text-color="#ffffff"
           active-text-color="#ffffff"
-          router
           @select="handleSelect"
+          router
+          style="display: flex"
         >
-          <el-menu-item v-for="item in navData" :key="item.id" :index="item.address">{{item.name}}</el-menu-item>
+        <ul v-for="item in navData" :key="item.id" >
+          <el-menu-item :index="item.path" v-if="!item.children">
+            {{item.label}}
+          </el-menu-item>
+          <el-submenu :index="item.path" v-else>
+            <template slot="title">{{item.label}}</template>
+            <el-menu-item
+              v-for="childrenItem in item.children"
+              :key="childrenItem.id"
+              :index="childrenItem.path"
+            >{{childrenItem.label}}</el-menu-item>
+          </el-submenu>
+        </ul>
         </el-menu>
       </div>
-      <div class="m hidden-md hidden-lg">
+    </header>
+    <header v-else>
+      <div class="m">
+        <a class="logo" href="javascript:;">
+          <img src="../../../assets/img/logo.png"/>
+          <span>纽川技术有限公司</span>
+        </a>
         <i class="iconfont icon-toggle" v-show="!isMenuShow" @click="menuToggle(true)"></i>
         <i class="iconfont icon-guanbi" v-show="isMenuShow" @click="offPopupBox"></i>
       </div>
-    </header>
-    <div class="popup-box" :class="{in: isMenuShow}">
-      <div v-show="isMenuShow">
-        <van-sidebar v-model="activeKey">
-          <van-sidebar-item v-for="item in navData" :key="item.id" :title="item.name" />
-        </van-sidebar>
+      <div class="popup-box" :class="{in: isMenuShow}">
+        <div v-show="isMenuShow">
+          <van-sidebar v-model="activeKey">
+            <van-sidebar-item v-for="item in navData" :key="item.id" :title="item.name" @click="goNav(item.address)" />
+          </van-sidebar>
+        </div>
       </div>
-    </div>
+    </header>
   </div>
 </template>
 
@@ -55,32 +71,34 @@ export default {
   },
   data () {
     return {
-      // pc-data
       activeIndex: 'home',
-      // m-data
       isMenuShow: false,
       activeKey: 0
     }
   },
   methods: {
-    // pc交互
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+      console.log(key, keyPath)
     },
-    // m交互
     menuToggle(type) {
       this.isMenuShow = type;
       this.isSearchShow = false
     },
     offPopupBox() {
       this.isMenuShow = false
+    },
+    goNav(type) {
+      this.isMenuShow = false
+      this.$router.push({
+        path: type.substr(1)
+      })
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.header-box {
+.header {
   position: fixed;
   top: 0;
   left: 0;
@@ -91,72 +109,66 @@ export default {
   box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.2);
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 11;
-  @media (max-width: 768px) {
-    header {
-      margin: 0 0.27rem;
-    }
-  }
-  @media (min-width: 768px) and (max-width: 991px) {
-    header {
-      margin: 0 0.27rem;
-    }
-  }
-  @media (min-width: 992px) and (max-width: 1199px) {
-    header {
-      width: 80%;
-      margin: 0 auto;
-    }
-  }
-  @media (min-width: 1200px) {
-    header {
-      width: 80%;
-      margin: 0 auto;
-    }
-  }
   header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 1.44rem;
     .logo {
       display: flex;
       align-items: center;
       color: #ffffff;
-      font-size: 0.29rem;
       img {
-        width: 0.87rem;
         height: auto;
-        margin-right: 0.33rem;
       }
     }
     .pc {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      height: 78px;
+      .logo {
+        font-size: 16px;
+        img {
+          width: 47px;
+          margin-right: 22px;
+        }
+      }
       // 导航
       .el-menu-demo {
         width: auto;
         transition: all 0.3s;
         border-bottom: unset;
         .el-menu-item, .el-submenu {
-          line-height: 1.44rem;
-          height: 1.44rem;
-          font-size: 0.29rem;
+          line-height: 78px;
+          height: 78px;
+          font-size: 16px;
           // padding: 0 10px;
           /deep/ .el-submenu__title {
-            line-height: 1.44rem;
-            height: 1.44rem;
+            line-height: 78px;
+            height: 78px;
+            font-size: 16px;
+            .el-submenu__icon-arrow {
+              right: 5px;
+            }
           }
         }
       }
     }
     .m {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 1.2rem;
+      .logo {
+        font-size: 0.3rem;
+        img {
+          width: 0.8rem;
+          margin-right: 0.2rem;
+        }
+      }
       i.iconfont {
-        font-size: 0.45rem;
+        font-size: 0.8rem;
         margin-left: 0.18rem;
         color: #fff;
       }
     }
-  }
   .popup-box {
     background: #fff;
     width: 100%;
@@ -173,6 +185,14 @@ export default {
   }
   .in {
     left: 0;
+  }
+  }
+}
+.el-menu--horizontal {
+  .el-menu--popup {
+    .el-menu-item {
+      background-color: rgba(0, 0, 0, 0.5) !important;
+    }
   }
 }
 </style>

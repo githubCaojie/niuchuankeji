@@ -1,0 +1,83 @@
+<template>
+<div class="about-content">
+  <div class="m">
+    <m-home-content-title class="white">
+      <h2 slot="name">{{theTitle.name}}</h2>
+      <h4 slot="translation">{{theTitle.translation}}</h4>
+    </m-home-content-title>
+    <div class="about-copy">
+      此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，
+    </div>
+    <van-row class="panel-list">
+      <van-col
+        span="6"
+        class="panel-item"
+        v-for="(item,i) in panelData"
+        :key="i"
+      >
+        <van-image :src="item.img"
+        />
+      </van-col>
+    </van-row>
+  </div>
+</div>
+</template>
+
+<script>
+import mHomeContentTitle from '@/components/content/HomeContentTitle/mHomeContentTitle';
+
+import { Image as VanImage, Col, Row } from 'vant';
+
+export default {
+  components: {
+    mHomeContentTitle,
+    [VanImage.name]: VanImage,
+    [Col.name]: Col,
+    [Row.name]: Row
+  },
+  data () {
+    return {
+      theTitle: {
+        name: '关于我们',
+        translation: 'ABOUT US'
+      },
+      panelData: [
+        {
+          img: require('../../../../assets/img/HomeServiceIcon/introduction.png')
+        },
+        {
+          img: require('../../../../assets/img/HomeServiceIcon/culture.png')
+        },
+        {
+          img: require('../../../../assets/img/HomeServiceIcon/qualification.png')
+        },
+        {
+          img: require('../../../../assets/img/HomeServiceIcon/recruitment.png')
+        }
+      ]
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.about-content {
+  background-image: url('../../../../assets/img/about_bg.jpg');
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: block;
+  .about-copy {
+    color: #ffffff;
+  }
+  .m {
+    .about-copy {
+      font-size: 0.35rem;
+      text-indent: 0.7rem;
+    }
+    .panel-item {
+      padding: 1rem 0.3rem;
+    }
+  }
+}
+</style>

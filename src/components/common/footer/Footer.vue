@@ -1,30 +1,7 @@
 <template>
-  <footer>
-    <div class="m hidden-md hidden-lg">
-      <van-collapse v-model="activeNames">
-        <van-collapse-item title="联系我们">
-          <van-cell v-for="(item, i) in contactData" :key="i" :value="item.name + '：' + item.value"/>
-        </van-collapse-item>
-        <van-collapse-item v-for="(item, i) in footerNavData" :key="i" :title="item.title">
-          <a href="javascript:;">
-            <van-cell v-for="(childItem, i) in item.childNavData" :key="i" :value="childItem.name" />
-          </a>
-        </van-collapse-item>
-      </van-collapse>
-      <div class="vant-copyright copyright">
-        <div class="copyright-text">
-          <div>
-            <span>©2021 华为技术有限公司</span>
-            <span>
-              <a href="http://beian.miit.gov.cn/">粤A2-20044005号</a>
-              <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030702002388">粤公网安备  44030702002388号</a>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pc hidden-xs hidden-sm">
+<div>
+  <footer v-if="$store.state.isMobile">
+    <div class="pc">
       <el-row :gutter="10">
         <el-col :span="12">
           <div class="nav-item">
@@ -32,26 +9,74 @@
               联系我们
             </h3>
             <ul>
-              <li v-for="(item, i) in contactData" :key="i">
-                {{item.name}}：{{item.value}}
+              <li>电话：{{contact.telephone}}</li>
+              <li>传真：{{contact.fax}}</li>
+              <li>邮箱：{{contact.mailbox}}</li>
+              <li>地址：{{contact.companyAddress}}</li>
+            </ul>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="nav-item">
+            <h3 class="collapsed">热门产品</h3>
+            <ul>
+              <li v-for="item in hotProduct" :key="item.id">
+                <a @click.prevent="goContent('chanping')">
+                  {{item.productName}}
+                </a>
               </li>
             </ul>
           </div>
         </el-col>
-        <el-col :span="4" v-for="(item, i) in footerNavData" :key="i" >
+        <el-col :span="4">
           <div class="nav-item">
-            <h3 class="collapsed">
-              {{item.title}}
-            </h3>
+            <h3 class="collapsed">解决方案</h3>
             <ul>
-              <li v-for="(childItem, i) in item.childNavData" :key="i">
-                <a href="javascript:;">{{childItem.name}}</a>
+              <li v-for="item in hotSolution" :key="item.id">
+                <a @click.prevent="goContent('fangan')">
+                  {{item.solutionName}}
+                </a>
               </li>
+            </ul>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="nav-item">
+            <h3 class="collapsed">关于纽川</h3>
+            <ul>
+              <li><a @click.prevent="goAbout('introduce')">企业简介</a></li>
+              <li><a @click.prevent="goAbout('course')">发展历程</a></li>
+              <li><a @click.prevent="goAbout('honor')">荣誉资质</a></li>
+              <li><a @click.prevent="goAbout('contact')">联系我们</a></li>
             </ul>
           </div>
         </el-col>
       </el-row>
-      <div class="el-copyright copyright">
+    </div>
+    <div class="copyright">
+      <div class="copyright-text">
+        <div>
+          <span>
+            <a href="javascript;:">Copyright Reserved ©湖南纽川技术有限公司 版权所有</a>
+            <a href="javascript;:">湘ICP备19005547号</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <footer v-else>
+    <div class="m">
+      <van-collapse v-model="activeNames">
+        <van-collapse-item title="联系我们">
+          <van-cell v-for="(item, i) in contact" :key="i" :value="item.name + '：' + item.value"/>
+        </van-collapse-item>
+        <van-collapse-item v-for="(item, i) in footerNavData" :key="i" :title="item.title">
+          <a @click.prevent="goContent(item.id)">
+            <van-cell v-for="(childItem, i) in item.childNavData" :key="i" :value="childItem.name" />
+          </a>
+        </van-collapse-item>
+      </van-collapse>
+      <div class="copyright">
         <div class="copyright-text">
           <div>
             <span>©2021 华为技术有限公司</span>
@@ -64,86 +89,36 @@
       </div>
     </div>
   </footer>
+</div>
 </template>
 
 <script>
 import { Collapse, CollapseItem, Cell, CellGroup } from 'vant';
 
 export default {
+  props: {
+    contact: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    hotProduct: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    hotSolution: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  },
   data() {
     return {
       activeNames: [],
-      contactData: [
-        {
-          name: '电话',
-          value: '0731-88888888'
-        },
-        {
-          name: '传真',
-          value: '0731-99999999'
-        },
-        {
-          name: '邮箱',
-          value: 'ABVDEF@KSJDJFHF.COM'
-        },
-        {
-          name: '公司地址',
-          value: '湖南省长沙市雨花区万家丽中路三段36号喜盈门商业广场'
-        }
-      ],
-      footerNavData: [
-        {
-          title: '热门产品',
-          childNavData:[
-            {
-              name: '产品名称'
-            },
-            {
-              name: '产品名称'
-            },
-            {
-              name: '产品名称'
-            },
-            {
-              name: '产品名称'
-            },
-          ]
-        },
-        {
-          title: '解决方案',
-          childNavData:[
-            {
-              name: '方案名称'
-            },
-            {
-              name: '方案名称'
-            },
-            {
-              name: '方案名称'
-            },
-            {
-              name: '方案名称'
-            },
-          ]
-        },
-        {
-          title: '关于纽川',
-          childNavData:[
-            {
-              name: '企业简介'
-            },
-            {
-              name: '发展历程'
-            },
-            {
-              name: '企业文化'
-            },
-            {
-              name: '资质荣誉'
-            },
-          ]
-        }
-      ]
     }
   },
   components: {
@@ -151,6 +126,21 @@ export default {
     [CollapseItem.name]: CollapseItem,
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup
+  },
+  methods: {
+    goContent(type) {
+      this.$router.push({
+        path: type
+      })
+    },
+    goAbout(type) {
+      this.$router.push({
+        path: 'aboutus',
+        query: {
+          type: type
+        }
+      })
+    }
   }
 }
 </script>
@@ -165,32 +155,28 @@ footer {
   a {
     color: #ffffff;
   }
-  .el-row {
-    width: 80%;
-    margin: 0 auto !important;
-    padding: 1.7rem 0;
+  .pc {
+    padding: 80px 0;
     .collapsed {
-      font-size: 0.4rem;
-      line-height: 0.4rem;
+      font-size: 30px;
       font-weight: 500;
-      margin-bottom: 0.33rem;
+      line-height: 50px;
     }
     ul {
       li {
-        margin-bottom: 0.2rem;
-        font-size: 0.25rem;
-        line-height: 0.3rem;
+        font-size: 16px;
+        line-height: 30px;
       }
     }
   }
-  .el-copyright {
-    font-size: 0.25rem;
+  .copyright {
+    font-size: 16px;
     display: flex;
     justify-content: center;
     color: #ffffff;
-    padding: 0.25rem 0;
+    padding: 30px 0;
     span {
-      margin: 0 0.18rem;
+      margin: 0 24px;
     }
     .copyright-text {
       display: flex;
@@ -206,20 +192,6 @@ footer {
     }
     /deep/ .van-collapse-item__wrapper .van-collapse-item__content {
       background-color: transparent;
-    }
-  }
-  .vant-copyright {
-    padding: 0.37rem 0;
-    font-size: 0.22rem;
-    line-height: 0.5rem;
-    text-align: center;
-    color: #ffffff;
-    .copyright-text {
-      padding: 0 0.27rem;
-      margin: 0 auto;
-      span {
-        display: block;
-      }
     }
   }
 }

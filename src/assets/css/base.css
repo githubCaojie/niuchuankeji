@@ -78,42 +78,31 @@ img {
     display: none;
 }
 
-
-/* 小尺寸*/
-
-
-/* hidden-xs hidden-sm */
-
-@media (max-width: 768px) {
-    .hidden-xs {
-        display: none !important;
-    }
+.pc {
+    width: 1200px;
+    margin: 0 auto;
 }
-
-@media (min-width: 768px) and (max-width: 991px) {
-    .hidden-sm {
-        display: none !important;
-    }
+.m {
+    margin: 0 0.27rem;
 }
-
-
-/* 大尺寸 */
-
-
-/* hidden-md hidden-lg */
-
-@media (min-width: 992px) and (max-width: 1199px) {
-    .hidden-md {
-        display: none !important;
-    }
+.text1hidden {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
-@media (min-width: 1200px) {
-    .hidden-lg {
-        display: none !important;
-    }
+.text3hidden {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 p.img {
     font-size: 0;
+    height: 100%;
+}
+
+a {
+    cursor: pointer;
 }
