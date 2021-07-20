@@ -2,8 +2,11 @@
 <template>
   <div>
     <pc-cooperation-detail
-      :bannerContent="bannerContent"
-      :breadCrumb="breadCrumb"
+      v-if="this.$store.state.isMobile"
+      :detail="detail"
+    />
+    <m-cooperation-detail
+      v-else
       :detail="detail"
     />
   </div>
@@ -11,16 +14,18 @@
 
 <script>
 import pcCooperationDetail from './pc/pcCooperationDetail';
+import mCooperationDetail from './m/mCooperationDetail.vue'
 
 import { getCooperteDetail } from '../../network/contentDetail';
 
 export default {
   components: {
     pcCooperationDetail,
+    mCooperationDetail
   },
   data () {
     return {
-      bannerContent: {
+      childBanner: {
         name: '生态合作',
         translation: 'COOPERATE',
         annotation: '诚邀合作伙伴共筑生态合作体系',
@@ -32,19 +37,20 @@ export default {
           path: '/home'
         },
         {
-          name: '产品方案',
-          path: ''
+          name: '生态合作',
+          path: '/cooperation'
         },
         {
-          name: '解决方案',
-          path: '/theSolution'
+          name: '合作生态展示',
         }
       ],
       detail: [],
     }
   },
-  created() {
-    this.getCooperteDetail(this.$route.query.id)
+  activated() {
+    this.getCooperteDetail(this.$route.query.id);
+    this.$store.commit('updateChildBanner', this.childBanner);
+    this.$store.commit('updateBreadCrumb', this.breadCrumb);
   },
   methods: {
     getCooperteDetail(id) {

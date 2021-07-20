@@ -1,22 +1,14 @@
 <template>
     <div
       class="childBanner"
-      :class="bannerContent.type"
+      :class="this.$store.state.childBanner.type"
     >
-      {{bannerContent.name}}
+      {{this.$store.state.childBanner.name}}
     </div>
 </template>
 
 <script>
 export default {
-  props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    }
-  }
 }
 </script>
 

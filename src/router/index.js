@@ -17,7 +17,7 @@ const routes = [
     }
   },
   {
-    path: '/chanping',
+    path: '/productCenter',
     name: 'productCenter',
     component: () => import('../views/product/productCenter'),
     meta: {
@@ -25,7 +25,7 @@ const routes = [
     }
   },
   {
-    path: '/fangan',
+    path: '/theSolution',
     name: 'theSolution',
     component: () => import('../views/product/theSolution'),
     meta: {
@@ -33,7 +33,7 @@ const routes = [
     }
   },
   {
-    path: '/succecases',
+    path: '/cases',
     name: 'cases',
     component: () => import('../views/cases/cases'),
     meta: {
@@ -49,7 +49,7 @@ const routes = [
     }
   },
   {
-    path: '/newsinfo',
+    path: '/news',
     name: 'news',
     component: () => import('../views/news/news'),
     meta: {
@@ -81,7 +81,7 @@ const routes = [
     }
   },
   {
-    path: '/zhaopin',
+    path: '/recruitments',
     name: 'recruitments',
     component: () => import('../views/recruitment/recruitments'),
     meta: {
@@ -93,7 +93,6 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  
   routes
 })
 

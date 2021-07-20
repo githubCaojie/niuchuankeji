@@ -4,8 +4,8 @@
     <m-home-product :product="product"/>
     <m-home-cases :cases="cases"/>
     <m-home-news :news="news"/>
-    <m-home-about/>
-    <m-home-cooperation :copperation="copperation"/>
+    <m-home-about :company="company"/>
+    <m-home-cooperation :partner="partner" :copperation="copperation"/>
   </div>
 </template>
 
@@ -17,8 +17,6 @@ import mHomeNews from './childComps/mHomeNews';
 import mHomeAbout from './childComps/mHomeAbout';
 import mHomeCooperation from './childComps/mHomeCooperation'
 
-import { getHomeBanner, getHomeProduct, getHomeCases, getHomeNews, getCopperation } from '../../../network/home';
-
 export default {
   components: {
     mHomeBanner,
@@ -28,49 +26,48 @@ export default {
     mHomeAbout,
     mHomeCooperation
   },
-  data () {
-    return {
-      banners: [],
-      product: [],
-      cases: [],
-      news: [],
-      copperation: []
-    }
-  },
-  created() {
-    // 请求数据
-    this.getHomeBanner();
-    this.getHomeProduct();
-    this.getHomeCases();
-    this.getHomeNews();
-    this.getCopperation()
-  },
-  methods: {
-    getHomeBanner () {
-      getHomeBanner().then(res => {
-        this.banners = res.data;
-      })
+  props: {
+    banners: {
+      type: Array,
+      default() {
+        return []
+      }
     },
-    getHomeProduct() {
-      getHomeProduct().then(res => {
-        this.product = res.data.list
-      })
+    product: {
+      type: Array,
+      default() {
+        return []
+      }
     },
-    getHomeCases() {
-      getHomeCases().then(res => {
-        this.cases = res.data.list;
-      })
+    cases: {
+      type: Array,
+      default() {
+        return []
+      }
     },
-    getHomeNews() {
-      getHomeNews().then(res => {
-        this.news = res.data.list;
-      })
+    news: {
+      type: Array,
+      default() {
+        return []
+      }
     },
-    getCopperation() {
-      getCopperation().then(res => {
-        console.log(res.data)
-        this.copperation = res.data;
-      })
+    company: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    partner: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    copperation: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   }
 }

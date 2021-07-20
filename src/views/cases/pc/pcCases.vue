@@ -1,6 +1,9 @@
 <template>
   <div>
-    <pc-child-banner :bannerContent="bannerContent"/>
+    <pc-child-banner />
+    <div class="breadcrumb">
+      <pc-bread-crumb/>
+    </div>
     <div class="pc">
       <div class="content">
         <el-row :gutter="60">
@@ -42,22 +45,18 @@
 
 <script>
 import pcChildBanner from '../../../components/content/childBanner/pcChildBanner';
+import pcBreadCrumb from '../../../components/content/breadCrumb/pcBreadCrumb';
 import pcImage from '../../../components/content/ncImage/pcImage';
 import pcChildImgItem from '../../../components/content/childImgItem/pcChildImgItem'
 
 export default {
   components: {
     pcChildBanner,
+    pcBreadCrumb,
     pcImage,
     pcChildImgItem
   },
   props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
     cases: {
       type: Object,
       default() {
@@ -70,29 +69,27 @@ export default {
       casesPage: 1,
     }
   },
-  created() {
-  },
   methods: {
     handleCurrentChange(val) {
       this.$emit('handleCurrentChange', val)
     },
     goCasesDetail(id) {
-      this.$router.push({
-        path: 'contentDetail',
-        query: {
-          type: 'cases',
-          casesId: id
-        }
-      })
+      this.$emit('goCasesDetail', id)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+.breadcrumb {
+  background-color: #f4f4f4;
+  .bread-crumbs {
+    height: 60px;
+    border: unset;
+  }
+}
 .content {
   min-height: 802px;
-  padding: 90px 0;
   .item {
     display: block;
     border: 1px solid #e2e2e2;

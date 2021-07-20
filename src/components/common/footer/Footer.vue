@@ -21,7 +21,7 @@
             <h3 class="collapsed">热门产品</h3>
             <ul>
               <li v-for="item in hotProduct" :key="item.id">
-                <a @click.prevent="goContent('chanping')">
+                <a @click.prevent="goContent('productCenter')">
                   {{item.productName}}
                 </a>
               </li>
@@ -33,7 +33,7 @@
             <h3 class="collapsed">解决方案</h3>
             <ul>
               <li v-for="item in hotSolution" :key="item.id">
-                <a @click.prevent="goContent('fangan')">
+                <a @click.prevent="goContent('theSolution')">
                   {{item.solutionName}}
                 </a>
               </li>
@@ -57,8 +57,8 @@
       <div class="copyright-text">
         <div>
           <span>
-            <a href="javascript;:">Copyright Reserved ©湖南纽川技术有限公司 版权所有</a>
-            <a href="javascript;:">湘ICP备19005547号</a>
+            Copyright Reserved ©纽川技术有限公司 版权所有
+            <a href="https://beian.miit.gov.cn" target="_blank">湘ICP备2021010442号-1</a>
           </span>
         </div>
       </div>
@@ -66,25 +66,48 @@
   </footer>
   <footer v-else>
     <div class="m">
-      <van-collapse v-model="activeNames">
+      <van-collapse v-model="activeNames" accordion>
         <van-collapse-item title="联系我们">
-          <van-cell v-for="(item, i) in contact" :key="i" :value="item.name + '：' + item.value"/>
+          <ul>
+            <li>电话：{{contact.telephone}}</li>
+            <li>传真：{{contact.fax}}</li>
+            <li>邮箱：{{contact.mailbox}}</li>
+            <li>地址：{{contact.companyAddress}}</li>
+          </ul>
         </van-collapse-item>
-        <van-collapse-item v-for="(item, i) in footerNavData" :key="i" :title="item.title">
-          <a @click.prevent="goContent(item.id)">
-            <van-cell v-for="(childItem, i) in item.childNavData" :key="i" :value="childItem.name" />
-          </a>
+        <van-collapse-item title="热门产品">
+          <ul>
+            <li v-for="item in hotProduct" :key="item.id">
+              <a @click.prevent="goContent('productCenter')">
+                {{item.productName}}
+              </a>
+            </li>
+          </ul>
+        </van-collapse-item>
+        <van-collapse-item title="解决方案">
+          <ul>
+            <li v-for="item in hotSolution" :key="item.id">
+              <a @click.prevent="goContent('theSolution')">
+                {{item.solutionName}}
+              </a>
+            </li>
+          </ul>
+        </van-collapse-item>
+        <van-collapse-item title="关于纽川">
+          <ul>
+            <li><a @click.prevent="goAbout('introduce')">企业简介</a></li>
+            <li><a @click.prevent="goAbout('course')">发展历程</a></li>
+            <li><a @click.prevent="goAbout('honor')">荣誉资质</a></li>
+            <li><a @click.prevent="goAbout('contact')">联系我们</a></li>
+          </ul>
         </van-collapse-item>
       </van-collapse>
-      <div class="copyright">
-        <div class="copyright-text">
-          <div>
-            <span>©2021 华为技术有限公司</span>
-            <span>
-              <a href="http://beian.miit.gov.cn/">粤A2-20044005号</a>
-              <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030702002388">粤公网安备  44030702002388号</a>
-            </span>
-          </div>
+    </div>
+    <div class="copyright copyright-m">
+      <div class="copyright-text">
+        <div>
+            <p>Copyright Reserved ©纽川技术有限公司 版权所有</p>
+            <a href="https://beian.miit.gov.cn">湘ICP备2021010442号-1</a>
         </div>
       </div>
     </div>
@@ -93,9 +116,13 @@
 </template>
 
 <script>
-import { Collapse, CollapseItem, Cell, CellGroup } from 'vant';
+import { Collapse, CollapseItem } from 'vant';
 
 export default {
+  components: {
+    [Collapse.name]: Collapse,
+    [CollapseItem.name]: CollapseItem
+  },
   props: {
     contact: {
       type: Object,
@@ -121,25 +148,18 @@ export default {
       activeNames: [],
     }
   },
-  components: {
-    [Collapse.name]: Collapse,
-    [CollapseItem.name]: CollapseItem,
-    [Cell.name]: Cell,
-    [CellGroup.name]: CellGroup
-  },
   methods: {
     goContent(type) {
-      this.$router.push({
+      let routerUrl = this.$router.resolve({
         path: type
       })
+      window.open(routerUrl.href, '_blank')
     },
     goAbout(type) {
       this.$router.push({
         path: 'aboutus',
-        query: {
-          type: type
-        }
       })
+      this.$store.commit('updateAboutType',type)
     }
   }
 }
@@ -182,16 +202,34 @@ footer {
       display: flex;
     }
   }
-  .van-collapse {
-    /deep/ .van-cell,.van-cell__value--alone {
-      color: #ffffff;
-      background-color: transparent;
+  .m {
+    .van-collapse {
+      /deep/ .van-cell,.van-cell__value--alone {
+        color: #ffffff;
+        background-color: transparent;
+        padding: 10px 0;
+      }
+      /deep/ .van-cell::after {
+        left: 0;
+        right: 0;
+        border-bottom: 1px solid #d4d4d4;
+      }
+      /deep/ .van-collapse-item__wrapper .van-collapse-item__content {
+        background-color: transparent;
+        padding: 10px 0;
+      }
+      .van-collapse-item--border::after {
+        left: 0;
+        right: 0;
+      }
     }
-    /deep/ .van-cell::after {
-      border-bottom: 1px solid #d4d4d4;
-    }
-    /deep/ .van-collapse-item__wrapper .van-collapse-item__content {
-      background-color: transparent;
+  }
+  .copyright-m {
+    .copyright-text {
+      a {
+        text-align: center;
+        display: block;
+      }
     }
   }
 }

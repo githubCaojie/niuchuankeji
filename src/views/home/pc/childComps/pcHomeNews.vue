@@ -25,7 +25,7 @@
           </div>
         </el-col>
       </el-row>
-      <el-button type="primary">查看更多</el-button>
+      <el-button type="primary" @click="goNewsList">查看更多</el-button>
     </div>
   </div>
 </template>
@@ -64,13 +64,20 @@ export default {
       this.homeImgId = '';
     },
     goNewsContent(id) {
-      this.$router.push({
+      let routeUrl = this.$router.resolve({
         path: 'contentDetail',
         query: {
           type: 'news',
           newsId: id
         }
       })
+      window.open(routeUrl.href, '_blank');
+    },
+    goNewsList() {
+      let routeUrl = this.$router.resolve({
+        path: 'news'
+      })
+      window.open(routeUrl.href, '_blank');
     }
   }
 }

@@ -2,15 +2,15 @@
   <div>
     <pc-product-center
     v-if="$store.state.isMobile"
-      :bannerContent="bannerContent"
-      :breadCrumb="breadCrumb"
       :productCenteCentent="productCenteCentent"
       @handleCurrentChange="getProductCenterContent"
+      @goProductDetail="goProductDetail"
     />
     <m-product-center
     v-else
-      :bannerContent="bannerContent"
       :productCenteCentent="productCenteCentent"
+      @handleCurrentChange="getProductCenterContent"
+      @goProductDetail="goProductDetail"
     />
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      bannerContent: {
+      childBanner: {
         name: '产品中心',
         translation: 'PRODUCT',
         annotation: '丰富的产品终端，专业安全的解决方案',
@@ -49,14 +49,10 @@ export default {
       productCenteCentent: {}
     }
   },
-  beforeCreate() {
-    document.querySelector('body').setAttribute('style', 'background:#f4f4f4')
-  },
-  beforeDestroy() {
-    document.querySelector('body').setAttribute('style', '')
-  },
-  created() {
-    this.getProductCenterContent(1, 8)
+  activated() {
+    this.getProductCenterContent(1, 8);
+    this.$store.commit('updateChildBanner', this.childBanner);
+    this.$store.commit('updateBreadCrumb', this.breadCrumb);
   },
   methods: {
     getProductCenterContent(page, size) {
@@ -64,6 +60,16 @@ export default {
         this.productCenteCentent = res.data
       })
     },
+    goProductDetail(id) {
+      let routeUrl = this.$router.resolve({
+        path: 'contentDetail',
+        query: {
+          type: 'product',
+          productId: id
+        }
+      })
+      window.open(routeUrl.href, '_blank');
+    }
   }
 }
 </script>

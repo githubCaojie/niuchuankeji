@@ -1,26 +1,26 @@
 <template>
   <div>
-    <pc-child-banner :bannerContent="bannerContent"/>
+    <pc-child-banner />
+    <div class="breadcrumb">
+      <pc-bread-crumb />
+    </div>
     <div class="recruitment pc">
-      <div class="breadcrumb">
-        <pc-bread-crumb :breadCrumb="breadCrumb"/>
-      </div>
       <el-collapse accordion>
         <el-collapse-item v-for="item in recruit.list" :key="item.id">
           <template slot="title">
-            <div>{{item.jobs}}</div>
+            <div style="text-align:left">{{item.jobs}}</div>
             <div>{{item.typeWork}}</div>
             <div>{{item.placeWork}}</div>
-            <div>{{item.time}}</div>
+            <div style="text-align:right">{{item.time}}</div>
           </template>
           <div class="item-content">
             <div class="responsibilities">
               <h4>岗位职责</h4>
-              <div>{{item.responsibilities}}</div>
+              <div v-html="item.responsibilities"></div>
             </div>
             <div class="requirement">
               <h4>岗位要求</h4>
-              <div>{{item.requirement}}</div>
+              <div v-html="item.requirement"></div>
             </div>
           </div>
         </el-collapse-item>
@@ -49,22 +49,10 @@ export default {
     pcBreadCrumb
   },
   props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
     recruit: {
       type: Object,
       default() {
         return {}
-      }
-    },
-    breadCrumb: {
-      type: Array,
-      default() {
-        return []
       }
     }
   },
@@ -72,9 +60,6 @@ export default {
     return {
       recruitPage: 1,
     }
-  },
-  created() {
-    console.log(this.bannerContent)
   },
   methods: {
     handleCurrentChange(val) {
@@ -104,6 +89,10 @@ export default {
         color: #656766;
         line-height: 60px;
         height: 60px;
+        div {
+          width: 25%;
+          text-align: center;
+        }
         i {
           display: none;
         }

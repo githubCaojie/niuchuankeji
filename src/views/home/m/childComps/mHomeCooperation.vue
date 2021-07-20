@@ -6,14 +6,15 @@
         <h4 slot="translation">{{theTitle.translation}}</h4>
       </m-home-content-title>
       <van-swipe :autoplay="3000">
-        <van-swipe-item v-for="item in copperation.slice(0,3)" :key="item.id">
-          <p class="img"><van-image fit="cover" :src="item.bigPicture" /></p>
+        <van-swipe-item v-for="item in copperation" :key="item.id">
+          <p class="img"><van-image fit="cover" width="100%" :src="item.bigPicture" /></p>
+          <div class="bg"></div>
           <div class="title-text">{{item.title}}</div>
         </van-swipe-item>
       </van-swipe>
       <van-row gutter="15">
-        <van-col span="12" v-for="item in copperation.slice(0,4)" :key="item.id">
-          <p class="img"><van-image fit="cover" :src="item.bigPicture" /></p>
+        <van-col span="12" v-for="item in partner" :key="item.id">
+          <p class="img"><van-image :src="item.image" /></p>
         </van-col>
       </van-row>
     </div>
@@ -35,6 +36,12 @@ export default {
     [Row.name]: Row
   },
   props: {
+    partner: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
     copperation: {
       type: Array,
       default() {
@@ -58,6 +65,14 @@ export default {
   background-color: #01267f;
   .m {
     margin: 0 0.27rem;
+    .bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(255,255,255,0.5)
+    }
     .title-text {
       position: absolute;
       top: 50%;

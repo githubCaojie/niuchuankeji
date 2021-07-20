@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <nc-header :navData="navData"/>
-    <router-view/>
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
     <nc-footer
       :contact="contact"
       :hotProduct="hotProduct"

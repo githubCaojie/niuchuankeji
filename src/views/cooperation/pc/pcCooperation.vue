@@ -1,10 +1,13 @@
 <template>
   <div>
-    <pc-child-banner :bannerContent="bannerContent"/>
+    <pc-child-banner />
+    <div class="breadcrumb">
+      <pc-bread-crumb/>
+    </div>
     <div class="pc">
       <div class="introduce">
         <h3 class="name">纽川科技生态</h3>
-        <div class="content">纽川技术有限公司是一家面向全国的IT技术服务及行业解决方案提供商，总部位于湖南长沙，自身强大的研发与创新能力，采用基于大数据、云计算和移动互联等新兴技术，为政府、教育、零售、能源、制造、医疗、电信、交通、等行业客户提供丰富的解决方案及服务。“智慧城市”战略的提出，为纽川的发展指明了新方向。将继续秉承“诚信、务实、高效、共赢”的理念，与时俱进，改革创新，奋力拼搏，为客户提供更加优质的服务，创建更加优质的工程，为智慧城市的建设发展做出更大贡献。</div>
+        <div class="content" v-html="company"></div>
       </div>
       <div class="class">
         <el-row :gutter="60">
@@ -56,10 +59,10 @@ export default {
     pcImage,
   },
   props: {
-    bannerContent: {
-      type: Object,
+    company: {
+      type: String,
       default() {
-        return {}
+        return ""
       }
     },
     cooperation: {
@@ -84,6 +87,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.breadcrumb {
+  background-color: #f4f4f4;
+  .bread-crumbs {
+    height: 60px;
+    border: unset;
+  }
+}
 .pc{
   margin: 0 auto 90px;
   .introduce, .partner {

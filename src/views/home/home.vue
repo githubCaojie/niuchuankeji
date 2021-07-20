@@ -7,6 +7,7 @@
       :cases="cases"
       :news="news"
       :company="company"
+      :partner="partner"
       :copperation="copperation"
     />
     <m-home
@@ -16,6 +17,7 @@
       :cases="cases"
       :news="news"
       :company="company"
+      :partner="partner"
       :copperation="copperation"
     />
   </div>
@@ -25,7 +27,8 @@
 import pcHome from './pc/pcHome';
 import mHome from './m/mHome'
 
-import { getHomeBanner, getHomeProduct, getHomeCases, getHomeNews, getCompany, getCopperation } from '../../network/home';
+import { getHomeBanner, getHomeProduct, getHomeCases, getHomeNews, getCompany, getPartner } from '../../network/home';
+import { getEcologicalCooperation } from '../../network/cooperation'
 
 export default {
   components: {
@@ -39,6 +42,7 @@ export default {
       cases: [],
       news: [],
       company: {},
+      partner: [],
       copperation: []
     }
   },
@@ -48,7 +52,8 @@ export default {
     this.getHomeCases();
     this.getHomeNews();
     this.getCompany();
-    this.getCopperation();
+    this.getPartner();
+    this.getEcologicalCooperation();
   },
   methods: {
     getHomeBanner () {
@@ -73,13 +78,17 @@ export default {
     },
     getCompany() {
       getCompany().then(res => {
-        console.log(res)
         this.company = res.data[0];
       })
     },
-    getCopperation() {
-      getCopperation().then(res => {
-        this.copperation = res.data;
+    getPartner() {
+      getPartner().then(res => {
+        this.partner = res.data;
+      })
+    },
+    getEcologicalCooperation() {
+      getEcologicalCooperation().then(res => {
+        this.copperation = res.data
       })
     }
   }

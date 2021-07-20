@@ -34,8 +34,8 @@ export function getCompany() {
     })
 }
 
-// 获取首页生态合作
-export function getCopperation() {
+// 获取首页生态合作伙伴
+export function getPartner() {
     return request({
         url: '/api/get/homepage/cooperation'
     })

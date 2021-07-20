@@ -1,6 +1,6 @@
 <template>
   <div>
-    <m-child-banner :bannerContent="bannerContent"/>
+    <m-child-banner />
     <div class="m">
       <div class="content">
         <van-row :gutter="10">
@@ -9,14 +9,19 @@
             :key="item.id"
             span="12"
           >
-            <a href="javascript:;" class="item">
+            <div class="item" @click="goProductDetail(item.id)">
               <p class="img"><van-image fit="cover" :src="item.bigPicture"/></p>
               <p class="name text1hidden">{{item.productName}}</p>
               <p class="text text3hidden">{{item.briefIntroduction}}</p>
-            </a>
+            </div>
           </van-col>
         </van-row>
-        <van-pagination v-model="currentPage" :total-items="24" :items-per-page="5" />
+        <van-pagination 
+          v-model="currentPage"
+          :total-items="productCenteCentent.total"
+          :items-per-page="productCenteCentent.pageSize"
+          @change="handleCurrentChange" 
+        />
       </div>
     </div>
   </div>
@@ -41,12 +46,6 @@ export default {
     }
   },
   props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
     productCenteCentent: {
       type: Object,
       default() {
@@ -54,6 +53,14 @@ export default {
       }
     }
   },
+  methods: {
+    handleCurrentChange(e) {
+      this.$emit('handleCurrentChange', e)
+    },
+    goProductDetail(id) {
+      this.$emit('goProductDetail', id)
+    }
+  }
 }
 </script>
 

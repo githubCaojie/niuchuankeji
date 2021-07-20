@@ -4,7 +4,7 @@
       您的位置：
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item
-          v-for="(item, i) in breadCrumb"
+          v-for="(item, i) in this.$store.state.breadCrumb"
           :key="i"
           :to="item.path"
         >{{item.name}}
@@ -30,7 +30,6 @@ export default {
 .bread-crumbs {
   display: flex;
   align-items: center;
-  height: 30px;
   border-bottom: 1px solid #d3d3d3;
   font-size: 16px;
   img {

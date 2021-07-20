@@ -7,15 +7,14 @@
           <span>纽川技术有限公司</span>
         </a>
         <el-menu
-          :default-active="activeIndex"
+          :default-active="$route.path"
           class="el-menu-demo"
           mode="horizontal"
           background-color="transparent"
           text-color="#ffffff"
           active-text-color="#ffffff"
-          @select="handleSelect"
-          router
           style="display: flex"
+          @select="handleSelect"
         >
         <ul v-for="item in navData" :key="item.id" >
           <el-menu-item :index="item.path" v-if="!item.children">
@@ -44,9 +43,18 @@
       </div>
       <div class="popup-box" :class="{in: isMenuShow}">
         <div v-show="isMenuShow">
-          <van-sidebar v-model="activeKey">
-            <van-sidebar-item v-for="item in navData" :key="item.id" :title="item.name" @click="goNav(item.address)" />
-          </van-sidebar>
+          <div v-for="item in navData" :key="item.id">
+            <van-cell-group v-if="!item.children">
+              <van-cell :title="item.label" @click="goNav(item.path)" />
+            </van-cell-group>
+            <van-collapse v-model="activeName" accordion v-else>
+              <van-collapse-item :title="item.label" :name="item.id">
+                <van-cell-group>
+                  <van-cell v-for="childItem in item.children" :key="childItem.id" :title="childItem.label" @click="goNav(childItem.path)" />
+                </van-cell-group>
+              </van-collapse-item>
+            </van-collapse>
+          </div>
         </div>
       </div>
     </header>
@@ -54,12 +62,14 @@
 </template>
 
 <script>
-import { Sidebar, SidebarItem } from 'vant';
+import { Collapse, CollapseItem, Cell, CellGroup } from 'vant';
 
 export default {
   components: {
-    [Sidebar.name]: Sidebar,
-    [SidebarItem.name]: SidebarItem
+    [Collapse.name]: Collapse,
+    [CollapseItem.name]: CollapseItem,
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup
   },
   props: {
     navData: {
@@ -71,14 +81,29 @@ export default {
   },
   data () {
     return {
-      activeIndex: 'home',
       isMenuShow: false,
-      activeKey: 0
+      activeName: '1'
     }
   },
   methods: {
     handleSelect(key, keyPath) {
-      console.log(key, keyPath)
+      if(key === '/recruitments') {
+        let routeUrl = this.$router.resolve({
+          path: key,
+        })
+        window.open(routeUrl.href, '_blank');
+      }else if(key.search('aboutus') != -1) {
+        let index = key.lastIndexOf("=");
+        let type = key.substring(index + 1, key.length);
+        this.$router.push({
+          path: 'aboutus',
+        })
+        this.$store.commit('updateAboutType',type)
+      }else {
+        this.$router.push({
+          path: key,
+        })
+      }
     },
     menuToggle(type) {
       this.isMenuShow = type;
@@ -88,7 +113,8 @@ export default {
       this.isMenuShow = false
     },
     goNav(type) {
-      this.isMenuShow = false
+      this.activeName = "";
+      this.isMenuShow = false;
       this.$router.push({
         path: type.substr(1)
       })
@@ -169,23 +195,19 @@ export default {
         color: #fff;
       }
     }
-  .popup-box {
-    background: #fff;
-    width: 100%;
-    height:calc(100vh - 67px);
-    position: fixed;
-    height: 1.44rem;
-    z-index: 9;
-    left: 100%;
-    -webkit-transition: all 0.5s;
-    transition: all 0.5s;
-    .van-sidebar {
+    .popup-box {
+      background: #fff;
       width: 100%;
+      height:calc(100vh - 1.2rem);
+      position: fixed;
+      z-index: 9;
+      left: 100%;
+      -webkit-transition: all 0.5s;
+      transition: all 0.5s;
     }
-  }
-  .in {
-    left: 0;
-  }
+    .in {
+      left: 0;
+    }
   }
 }
 .el-menu--horizontal {

@@ -5,9 +5,7 @@
       <h2 slot="name">{{theTitle.name}}</h2>
       <h4 slot="translation">{{theTitle.translation}}</h4>
     </m-home-content-title>
-    <div class="about-copy">
-      此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，此处为公司简介文案，
-    </div>
+    <div class="about-copy" v-html="company.companyProfile"></div>
     <van-row class="panel-list">
       <van-col
         span="6"
@@ -34,6 +32,14 @@ export default {
     [VanImage.name]: VanImage,
     [Col.name]: Col,
     [Row.name]: Row
+  },
+  props: {
+    company: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
   },
   data () {
     return {

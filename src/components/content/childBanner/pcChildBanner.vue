@@ -1,23 +1,16 @@
 <template>
-  <div class="banner" :class="bannerContent.type">
+  <div class="banner" :class="this.$store.state.childBanner.type">
     <div class="banner-content">
-      <p class="title">{{bannerContent.name}}</p>
-      <p class="annotation">{{bannerContent.translation}}</p>
-      <p class="describe">{{bannerContent.annotation}}</p>
+      <p class="title">{{this.$store.state.childBanner.name}}</p>
+      <p class="annotation">{{this.$store.state.childBanner.translation}}</p>
+      <p class="describe">{{this.$store.state.childBanner.annotation}}</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    }
-  }
+  
 }
 </script>
 

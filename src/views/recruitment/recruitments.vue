@@ -1,9 +1,13 @@
 <template>
   <div>
     <pc-recruitments
-      :bannerContent="bannerContent"
+      v-if="$store.state.isMobile"
       :recruit="recruit"
-      :breadCrumb="breadCrumb"
+      @handleCurrentChange="getRecruit"
+    />
+    <m-recruitments
+      v-else
+      :recruit="recruit"
       @handleCurrentChange="getRecruit"
     />
   </div>
@@ -11,16 +15,18 @@
 
 <script>
 import pcRecruitments from "./pc/pcRecruitments";
+import mRecruitments from './m/mRecruitments.vue'
 
 import { getRecruit } from '../../network/public'
 
 export default {
   components: {
-    pcRecruitments
+    pcRecruitments,
+    mRecruitments
   },
   data () {
     return {
-      bannerContent: {
+      childBanner: {
         name: '招贤纳士',
         translation: 'ABOUT US',
         annotation: '加入纽川 更多机遇 更多精彩',
@@ -33,24 +39,23 @@ export default {
         },
         {
           name: '关于纽川',
-          path: ''
         },
         {
           name: '招贤纳士',
-          path: '/recruitments'
         }
       ],
-      recruit: {}
+      recruit: {},
     }
   },
   created() {
+    this.$store.commit('updateChildBanner', this.childBanner);
+    this.$store.commit('updateBreadCrumb', this.breadCrumb);
     this.getRecruit(1,8)
   },
   methods: {
     getRecruit(page) {
       getRecruit(page).then(res => {
         this.recruit = res.data
-        console.log(this.recruit)
       })
     }
   }

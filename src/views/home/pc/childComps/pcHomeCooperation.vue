@@ -7,29 +7,30 @@
     <div class="pc hidden-xs hidden-sm">
       <el-row :gutter="20">
         <el-col 
-          :span="8" v-for="item in copperation.slice(0,3)"
+          :span="8" v-for="item in copperation"
           :key="item.id"
         >
         <div
-          @mouseover="itemOver(item.id)"
+          @mouseover="cooperationItemOver(item.id)"
           @mouseleave="itemLeave"
           class="item"
         >
           <a @click.prevent="goCooperation">
-            <pc-image :src="item.image" height="175px" :active="homeImgId === item.id"/>
-            <div class="title-text">{{item.name}}</div>
+            <pc-image :src="item.bigPicture" height="175px" :active="cooperationActiveId === item.id"/>
+            <div class="bg-box"></div>
+            <div class="text-box">{{item.title}}</div>
           </a>
         </div>
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="6" v-for="item in copperation.slice(3,4)" :key="item.id">
+        <el-col :span="6" v-for="item in partner" :key="item.id">
         <div 
-          @mouseover="itemOver(item.id)"
+          @mouseover="partnerItemOver(item.id)"
           @mouseleave="itemLeave"
         >
           <a @click.prevent="goCooperation">
-            <pc-image :src="item.image" height="100px" :active="homeImgId === item.id"/>
+            <pc-image :src="item.image" height="100px" :active="partnerActiveId === item.id"/>
           </a>
         </div>
         </el-col>
@@ -48,6 +49,12 @@ export default {
     pcImage
   },
   props: {
+    partner: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
     copperation: {
       type: Array,
       default() {
@@ -61,15 +68,20 @@ export default {
         name: '生态合作',
         translation: 'COPPERATION'
       },
-      homeImgId: ''
+      cooperationActiveId: '',
+      partnerActiveId: '',
     }
   },
   methods: {
-    itemOver(id) {
-      this.homeImgId = id;
+    cooperationItemOver(id) {
+      this.cooperationActiveId = id;
+    },
+    partnerItemOver(id) {
+      this.partnerActiveId = id;
     },
     itemLeave() {
-      this.homeImgId = '';
+      this.partnerActiveId = '';
+      this.cooperationActiveId = '';
     },
     goCooperation() {
       this.$router.push({
@@ -83,23 +95,35 @@ export default {
 <style lang="less" scoped>
 .cooperation-content {
   background-color: #01267f;
-  .title-text {
+  .bg-box {
     position: absolute;
-    top: 50%;
-    left: 0;
     width: 100%;
-    transform: translateY(-50%);
-    text-align:center;
-    z-index: 9;
-    color: #2f456a;
-    font-size: 20px;
-    font-weight: bold;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  .text-box {
+    position: absolute;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #123f70;
   }
   .pc {
-    .el-col {
-      margin-bottom: 1.11rem;
-      .item {
-        position: relative;
+    .el-row{
+      .el-col-8 {
+        margin-bottom: 50px;
+        .item {
+          position: relative;
+        }
+      }
+      .el-col-6 {
+        margin-bottom: 20px;
       }
     }
   }

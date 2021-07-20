@@ -5,7 +5,7 @@
     <pc-home-cases :cases="cases"/>
     <pc-home-news :news="news"/>
     <pc-home-about :company="company"/>
-    <pc-home-cooperation :copperation="copperation"/>
+    <pc-home-cooperation :partner="partner" :copperation="copperation"/>
   </div>
 </template>
 
@@ -63,12 +63,18 @@ export default {
         return {}
       }
     },
-    copperation: {
+    partner: {
       type: Array,
       default() {
         return []
       }
     },
+    copperation: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
   },
   methods: {
     imgLoad() {

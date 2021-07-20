@@ -1,6 +1,9 @@
 <template>
   <div>
-    <pc-child-banner :bannerContent="bannerContent"/>
+    <pc-child-banner />
+    <div class="breadcrumb">
+      <pc-bread-crumb/>
+    </div>
     <div class="pc">
       <div class="content">
         <el-row>
@@ -35,18 +38,14 @@
 
 <script>
 import pcChildBanner from '../../../components/content/childBanner/pcChildBanner';
+import pcBreadCrumb from '../../../components/content/breadCrumb/pcBreadCrumb';
 
 export default {
   components: {
-    pcChildBanner
+    pcChildBanner,
+    pcBreadCrumb
   },
   props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
     news: {
       type: Object,
       default() {
@@ -64,13 +63,7 @@ export default {
       this.$emit('handleCurrentChange', val)
     },
     goNewsDetail(id) {
-      this.$router.push({
-        path: 'contentDetail',
-        query: {
-          type: 'news',
-          newsId: id
-        }
-      })
+      this.$emit('goNewsDetail', id)
     }
   }
 }
@@ -79,7 +72,6 @@ export default {
 <style lang="less" scoped>
 .content {
   min-height: 802px;
-  padding: 90px 0;
   a {
     display: block;
     line-height: 20px;

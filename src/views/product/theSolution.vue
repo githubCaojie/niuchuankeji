@@ -1,22 +1,32 @@
 <template>
   <div>
     <pc-the-solution
-      :bannerContent="bannerContent"
-      :breadCrumb="breadCrumb"
+      v-if="this.$store.state.isMobile"
+      :solutionCentent="solutionCentent"
+      @goSolutionDetail="goSolutionDetail"
+    />
+    <m-the-solution
+      v-else
+      :solutionCentent="solutionCentent"
+      @goSolutionDetail="goSolutionDetail"
     />
   </div>
 </template>
 
 <script>
 import pcTheSolution from './pc/pcTheSolution.vue';
+import mTheSolution from './m/mTheSolution.vue'
+
+import { getTheSolutionContent } from '../../network/product';
 
 export default {
   components: {
-    pcTheSolution
+    pcTheSolution,
+    mTheSolution
   },
   data () {
     return {     
-      bannerContent: {
+      childBanner: {
         name: '解决方案',
         translation: 'SOLUTION',
         annotation: '丰富的产品终端，专业安全的解决方案',
@@ -34,6 +44,29 @@ export default {
           name: '解决方案',
         }
       ],
+      solutionCentent: []
+    }
+  },
+  activated() {
+    this.getTheSolutionContent();
+    this.$store.commit('updateChildBanner', this.childBanner);
+    this.$store.commit('updateBreadCrumb', this.breadCrumb);
+  },
+  methods: {
+    getTheSolutionContent() {
+      getTheSolutionContent().then(res => {
+        this.solutionCentent = res.data.list
+      })
+    },
+    goSolutionDetail(id) {
+      let routeUrl = this.$router.resolve({
+        path: 'contentDetail',
+        query: {
+          type: 'solution',
+          id: id
+        }
+      })
+      window.open(routeUrl.href, '_blank')
     }
   }
 }

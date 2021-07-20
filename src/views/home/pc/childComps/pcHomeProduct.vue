@@ -7,7 +7,7 @@
     <div class="pc">
       <el-row :gutter="60">
         <el-col :span="8" v-for="item in classData" :key="item.id">
-          <a 
+          <div
             class="class-item" 
           >
             <el-image fit="cover" :src="require('@/assets/img/' + item.iconUrl)"/>
@@ -17,7 +17,7 @@
                 <span v-for="(noteItem, i) in item.note" :key="i">{{noteItem}}</span>
               </div>
             </div>
-          </a>
+          </div>
         </el-col>
       </el-row>
       <el-row :gutter="60">
@@ -91,9 +91,10 @@ export default {
   },
   methods: {
     productImgItemClick(url) {
-      this.$router.push({
-        path: 'chanping'
+      let routeUrl = this.$router.resolve({
+        path: 'productCenter'
       })
+      window.open(routeUrl.href, '_blank');
     },
     itemOver(id) {
       this.homeImgId = id

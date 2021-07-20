@@ -1,6 +1,9 @@
 <template>
   <div>
-    <pc-child-banner :bannerContent="bannerContent"/>
+    <pc-child-banner/>
+    <div class="breadcrumb">
+      <pc-bread-crumb/>
+    </div>
     <div class="pc introduce" ref="introduce">
       <h3 class="name">
         <pc-image :src="require('../../../assets/img/logoActive.png')" height="38px" width="36px"/>
@@ -51,6 +54,7 @@
 
 <script>
 import pcChildBanner from '../../../components/content/childBanner/pcChildBanner';
+import pcBreadCrumb from '../../../components/content/breadCrumb/pcBreadCrumb';
 import pcImage from '../../../components/content/ncImage/pcImage';
 
 import { swiper, swiperSlide } from "vue-awesome-swiper";
@@ -59,17 +63,12 @@ import "swiper/swiper-bundle.css";
 export default {
   components: {
     pcChildBanner,
+    pcBreadCrumb,
     pcImage,
     swiper,
     swiperSlide
   },
   props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
     company: {
       type: Object,
       default() {
@@ -94,13 +93,6 @@ export default {
         return {}
       }
     },
-    type: {
-      type: String,
-      default() {
-        return ""
-      }
-
-    }
   },
   data () {
     return {
@@ -119,11 +111,16 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         }
-      }
+      },
+    }
+  },
+  watch: {
+    "$store.state.aboutType": function(val, oldVal) {
+      document.documentElement.scrollTop = this.$refs[val].offsetTop
     }
   },
   mounted () {
-    document.documentElement.scrollTop = this.$refs[this.type].offsetTop
+    document.documentElement.scrollTop = this.$refs[this.$store.state.aboutType].offsetTop
   }
 }
 </script>

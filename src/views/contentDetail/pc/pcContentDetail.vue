@@ -1,16 +1,14 @@
 <template>
   <div>
-    <pc-child-banner :bannerContent="bannerContent"/>
+    <pc-child-banner />
+    <div class="breadcrumb">
+      <pc-bread-crumb/>
+    </div>
     <div class="pc">
-      <div class="breadcrumb">
-        <pc-bread-crumb :breadCrumb="breadCrumb"/>
-      </div>
       <div class="content">
         <div v-for="item in detail" :key="item.id">
-          <h3 class="title">{{item.successfulCasesName || item.title}}</h3>
-          <div class="img">
-            <pc-image :src="item.bigPicture" height="220px" width="360px"/>
-          </div>
+          <h3 class="title">{{item.successfulCasesName || item.title || item.productName || item.solutionName}}</h3>
+          <div class="label"><span>发布时间：{{item.time}}</span><span>来源：{{item.source}}</span></div>
           <div class="text" v-html="item.introduce || item.newsIntroduce">
           </div>
         </div>
@@ -22,27 +20,13 @@
 <script>
 import pcChildBanner from '../../../components/content/childBanner/pcChildBanner';
 import pcBreadCrumb from '../../../components/content/breadCrumb/pcBreadCrumb';
-import pcImage from '../../../components/content/ncImage/pcImage';
 
 export default {
   components: {
     pcChildBanner,
-    pcBreadCrumb,
-    pcImage
+    pcBreadCrumb
   },
   props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    breadCrumb: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
     detail: {
       type: Array,
       default() {
@@ -54,16 +38,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.breadcrumb {
-  margin: 90px 0 60px;
-}
 .content {
   h3.title {
     text-align: center;
     font-size: 30px;
   }
-  .img {
-    margin: 60px auto;
+  .label {
+    text-align: center;
+    font-size: 14px;
+    color: #999999;
+    margin: 30px auto 60px;
+    span {
+      margin: 0 10px;
+    }
   }
   .text {
     font-size: 18px;

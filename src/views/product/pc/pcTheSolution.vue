@@ -1,9 +1,9 @@
 <template>
   <div>
-    <pc-child-banner :bannerContent="bannerContent"/>
+    <pc-child-banner/>
     <div>
       <div class="breadcrumb">
-        <pc-bread-crumb :breadCrumb="breadCrumb"/>
+        <pc-bread-crumb/>
       </div>
       <div class="content">
         <el-row>
@@ -12,7 +12,7 @@
             v-for="item in solutionCentent"
             :key="item.id"
           >
-            <a href="javascript:;">
+            <a href="javascript:;" @click="goSolutionDetail(item.id)">
               <div class="pc item">
                 <pc-image :src="item.bigPicture" height="175px" width="275px" :isborder="true"/>
                 <div class="text">
@@ -34,8 +34,6 @@ import pcChildBanner from '../../../components/content/childBanner/pcChildBanner
 import pcBreadCrumb from '../../../components/content/breadCrumb/pcBreadCrumb';
 import pcImage from '../../../components/content/ncImage/pcImage';
 
-import { getTheSolutionContent } from '../../../network/product' 
-
 export default {
   components: {
     pcChildBanner,
@@ -43,47 +41,24 @@ export default {
     pcImage
   },
   props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    breadCrumb: {
+    solutionCentent: {
       type: Array,
       default() {
         return []
       }
     }
   },
-  data() {
-    return {
-      solutionCentent: []
-    }
-  },
-  created() {
-    this.getTheSolutionContent()
-  },
   methods: {
-    getTheSolutionContent() {
-      getTheSolutionContent().then(res => {
-        this.solutionCentent = res.data.list
-        console.log(res)
-      })
+    goSolutionDetail(id) {
+      this.$emit('goSolutionDetail', id)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.breadcrumb {
-  background-color: #f4f4f4;
-  .bread-crumbs {
-    height: 60px;
-    border: unset;
-  }
-}
 .content {
+  margin-top: -90px;
   /deep/ .el-row {
     .el-col:nth-last-child(odd) {
       background-color: #f4f4f4;

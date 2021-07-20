@@ -1,45 +1,63 @@
 <template>
   <div>
     <pc-about
-      :bannerContent="bannerContent"
+      v-if="$store.state.isMobile"
       :company="company"
       :development="development"
       :honor="honor"
       :contact="contact"
-      :type="type"
+    />
+    <m-about
+      v-else
+      :company="company"
+      :development="development"
+      :honor="honor"
+      :contact="contact"
     />
   </div>
 </template>
 
 <script>
 import pcAbout from './pc/pcAbout';
+import mAbout from './m/mAbout.vue'
 
 import { getAboutCompany, getAboutCompanyContact, getAboutDevelopment, getAboutHonor } from '../../network/about'
 
 export default {
   components: {
-    pcAbout
+    pcAbout,
+    mAbout
   },
   data () {
     return {
-      bannerContent: {
+      childBanner: {
         name: '关于纽川',
         translation: 'ABOUT US',
         annotation: '诚信 务实 高效 共赢',
         type: 'about'
       },
+      breadCrumb: [
+        {
+          name: '首页',
+          path: '/home'
+        },
+        {
+          name: '关于纽川',
+        }
+      ],
       company: {},
       development: [],
       honor: [],
-      contact: {},
-      type: this.$route.query.type,
+      contact: {}
     }
   },
-  created() {
+  activated() {
     this.getAboutCompany();
     this.getAboutDevelopment();
     this.getAboutHonor();
-    this.getAboutCompanyContact()
+    this.getAboutCompanyContact();
+    this.$store.commit('updateChildBanner', this.childBanner);
+    this.$store.commit('updateBreadCrumb', this.breadCrumb);
   },
   methods: {
     getAboutCompany() {

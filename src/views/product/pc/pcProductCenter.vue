@@ -1,10 +1,10 @@
 <template>
   <div>
-    <pc-child-banner :bannerContent="bannerContent"/>
+    <pc-child-banner/>
+    <div class="breadcrumb">
+      <pc-bread-crumb/>
+    </div>
     <div class="pc">
-      <div class="breadcrumb">
-        <pc-bread-crumb :breadCrumb="breadCrumb"/>
-      </div>
       <div class="content">
         <el-row :gutter="60">
           <el-col
@@ -12,7 +12,7 @@
             :key="item.id"
             :span="6"
           >
-          <div class="item">
+          <div class="item" @click="goProductDetail(item.id)">
             <pc-child-img-item>
               <div slot="img">
                 <pc-image :src="item.bigPicture" height="200px"/>
@@ -54,18 +54,6 @@ export default {
     pcChildImgItem,
   },
   props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    breadCrumb: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
     productCenteCentent: {
       type: Object,
       default() {
@@ -82,6 +70,9 @@ export default {
   methods: {
     handleCurrentChange(val) {
       this.$emit('handleCurrentChange', val)
+    },
+    goProductDetail(id) {
+      this.$emit('goProductDetail', id)
     }
   }
 }
@@ -89,16 +80,13 @@ export default {
 
 <style lang="less" scoped>
 .pc {
-  padding: 90px 0;
-  .breadcrumb {
-    margin-bottom: 64px;
-  }
   .content {
     min-height: 802px;
     .item {
       border: 1px solid #e2e2e2;
       margin-bottom: 60px;
       background-color: #fff;
+      cursor: pointer;
       .text {
         border-top: 1px solid #e2e2e2;
         color: #666666;

@@ -57,7 +57,7 @@ export default {
           type: 'introduce'
         },
         {
-          titile: '发展历程',
+          titile: '企业文化',
           img: require('../../../../assets/img/HomeServiceIcon/culture.png'),
           activeImg: require('../../../../assets/img/HomeServiceIcon/culture_active.png'),
           type: 'course'
@@ -69,10 +69,10 @@ export default {
           type: 'honor'
         },
         {
-          titile: '联系我们',
+          titile: '招贤纳士',
           img: require('../../../../assets/img/HomeServiceIcon/recruitment.png'),
           activeImg: require('../../../../assets/img/HomeServiceIcon/recruitment_active.png'),
-          type: 'contact'
+          type: 'recruitments'
         }
       ],
       panelIndex: -1,
@@ -86,12 +86,20 @@ export default {
       this.panelIndex = -1;
     },
     goAbout(type) {
-      this.$router.push({
-        path: 'aboutus',
-        query: {
-          type: type
-        }
-      })
+      if(type === 'recruitments') {
+        let routeUrl = this.$router.resolve({
+          path: 'recruitments'
+        })
+        window.open(routeUrl.href, '_blank');
+      }else {
+        let routeUrl =this.$router.resolve({
+          path: 'aboutus',
+          query: {
+            type: type
+          }
+        })
+        window.open(routeUrl.href, '_blank');
+      }
     }
   }
 }

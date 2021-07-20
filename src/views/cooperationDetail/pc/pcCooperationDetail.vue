@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pc-child-banner :bannerContent="bannerContent"/>
+    <pc-child-banner />
     <div>
       <div class="breadcrumb">
         <pc-bread-crumb :breadCrumb="breadCrumb"/>
@@ -60,18 +60,6 @@ export default {
     pcImage,
   },
   props: {
-    bannerContent: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    breadCrumb: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
     detail: {
       type: Array,
       default() {

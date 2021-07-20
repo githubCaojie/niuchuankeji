@@ -44,7 +44,7 @@
             @mouseover="itemOver(item.id)"
             @mouseleave="itemLeave"
           >
-            <a href="javascript:;">
+            <a @click.prevent="goCasesContent(item.id)">
               <div class="mask"></div>
               <pc-image :src="item.bigPicture" height="175px" :active="homeImgId === item.id"/>
               <div class="text-box">
@@ -95,13 +95,14 @@ export default {
       this.homeImgId = ''
     },
     goCasesContent(id) {
-      this.$router.push({
+      let routeUrl = this.$router.resolve({
         path: 'contentDetail',
         query: {
           type: 'cases',
           casesId: id
         }
       })
+      window.open(routeUrl.href, '_blank');
     }
   }
 }
@@ -175,7 +176,7 @@ export default {
       }
       .more {
         opacity: 0;
-        font-size: 0.875em;
+        font-size: 13px;
       }
     }
     .in {

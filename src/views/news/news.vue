@@ -1,34 +1,54 @@
 <template>
   <div>
     <pc-news
-      :bannerContent="bannerContent"
+      v-if="$store.state.isMobile"
       :news="news"
       @handleCurrentChange="getNewsContent"
+      @goNewsDetail="goNewsDetail"
+    />
+    <m-news
+      v-else
+      :news="news"
+      @handleCurrentChange="getNewsContent"
+      @goNewsDetail="goNewsDetail"
     />
   </div>
 </template>
 
 <script>
 import pcNews from './pc/pcNews';
+import mNews from './m/mNews'
 
 import { getNewsContent } from '../../network/news'
 export default {
   components: {
-    pcNews
+    pcNews,
+    mNews
   },
   data () {
     return {
-      bannerContent: {
+      childBanner: {
         name: '新闻资讯',
         translation: 'NEWS',
         annotation: '公司动态 行业新闻 新鲜资讯',
         type: 'news'
       },
+      breadCrumb: [
+        {
+          name: '首页',
+          path: '/home'
+        },
+        {
+          name: '新闻资讯',
+        }
+      ],
       news: {}
     }
   },
-  created() {
-    this.getNewsContent(1,8)
+  activated() {
+    this.getNewsContent(1,8);
+    this.$store.commit('updateChildBanner', this.childBanner);
+    this.$store.commit('updateBreadCrumb', this.breadCrumb);
   },
   methods: {
     getNewsContent(page, size) {
@@ -36,6 +56,15 @@ export default {
         this.news = res.data;
       })
     },
+    goNewsDetail(id) {
+      this.$router.push({
+        path: 'contentDetail',
+        query: {
+          type: 'news',
+          newsId: id
+        }
+      })
+    }
   }
 }
 </script>

@@ -1,15 +1,16 @@
 <template>
   <div>
     <pc-cases
-      :bannerContent="bannerContent"
-      :cases="cases"
       v-if="$store.state.isMobile"
+      :cases="cases"
       @handleCurrentChange="getSuccessfulCases"
+      @goCasesDetail="goCasesDetail"
     />
     <m-cases
-      :bannerContent="bannerContent"
-      :cases="cases"
       v-else
+      :cases="cases"
+      @handleCurrentChange="getSuccessfulCases"
+      @goCasesDetail="goCasesDetail"
     />
   </div>
 </template>
@@ -27,22 +28,42 @@ export default {
   },
   data () {
     return {
-      bannerContent: {
+      childBanner: {
         name: '成功案例',
         translation: 'SUCCESSFUL CASES',
         annotation: '丰富的产品终端，专业安全的解决方案',
         type: 'cases'
       },
+      breadCrumb: [
+        {
+          name: '首页',
+          path: '/home'
+        },
+        {
+          name: '成功案例',
+        }
+      ],
       cases: {}
     }
   },
-  created() {
+  activated() {
     this.getSuccessfulCases(1,8)
+    this.$store.commit('updateChildBanner', this.childBanner);
+    this.$store.commit('updateBreadCrumb', this.breadCrumb);
   },
   methods: {
     getSuccessfulCases(page,size) {
       getSuccessfulCases(page,size).then(res => {
         this.cases = res.data
+      })
+    },
+    goCasesDetail(id) {
+      this.$router.push({
+        path: 'contentDetail',
+        query: {
+          type: 'cases',
+          casesId: id
+        }
       })
     }
   }
