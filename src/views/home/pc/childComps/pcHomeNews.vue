@@ -86,7 +86,7 @@ export default {
 <style lang="less" scoped>
 .pc {
   .item {
-    background-color: #014eb6;
+    background-color: var(--home-element-background);
     .box {
       .text {
         color: #ffffff;

@@ -110,7 +110,7 @@ export default {
 
 <style lang="less" scoped>
 .cases-content {
-  background-color: #095dcd;
+  background-color: var(--home-element-background);
   .mask {
     visibility: visible;
     opacity: 1;

@@ -48,6 +48,12 @@ export default {
           translation: 'SOLUTION',
           annotation: '丰富的产品终端，专业安全的解决方案',
           type: 'solution'
+        },
+        none: {
+          name: '',
+          translation: '',
+          annotation: '',
+          type: 'none'
         }
       },
       breadCrumbList: {
@@ -101,14 +107,22 @@ export default {
             name: '方案详情'
           }
         ],
+        none: [
+          {
+            name: '首页',
+            path: '/home'
+          }
+        ]
       },
       detail: []
     }
   },
   activated() {
     let type = this.$route.query.type;
+    console.log(type)
     this.$store.commit('updateChildBanner', this.childBannerList[type]);
     this.$store.commit('updateBreadCrumb', this.breadCrumbList[type]);
+    console.log(type)
     if(type === 'cases') {
       this.getSuccessfulCasesDetail(this.$route.query.casesId)
     }
@@ -120,6 +134,19 @@ export default {
     }
     if(type === 'solution') {
       this.getTheSolutionDetailed(this.$route.query.id)
+    }
+    if(type === 'none') {
+      let data = [
+        {
+          introduce: localStorage.getItem('bannerArticle')
+        }
+      ]
+      this.detail = data
+    }
+  },
+  beforeCreate () {
+    if(this.$route.query.type === 'none' ) {
+      document.title = '详情'
     }
   },
   methods: {

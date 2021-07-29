@@ -2,7 +2,7 @@
   <div class="header">
     <header v-if="$store.state.isMobile">
       <div class="pc">
-        <a class="logo" href="javascript:;">
+        <a class="logo" @click.prevent="logoClick">
           <img src="../../../assets/img/logo.png"/>
           <span>纽川技术有限公司</span>
         </a>
@@ -34,7 +34,7 @@
     </header>
     <header v-else>
       <div class="m">
-        <a class="logo" href="javascript:;">
+        <a class="logo" @click.prevent="logoClick">
           <img src="../../../assets/img/logo.png"/>
           <span>纽川技术有限公司</span>
         </a>
@@ -86,6 +86,11 @@ export default {
     }
   },
   methods: {
+    logoClick() {
+      this.$router.push({
+        path: 'home'
+      })
+    },
     handleSelect(key, keyPath) {
       if(key === '/recruitments') {
         let routeUrl = this.$router.resolve({

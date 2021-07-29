@@ -70,6 +70,14 @@ export default {
       ],
     }
   },
+  methods: {
+    productImgItemClick(url) {
+      let routeUrl = this.$router.resolve({
+        path: 'productCenter'
+      })
+      window.open(routeUrl.href, '_blank');
+    },
+  }
 }
 </script>
 

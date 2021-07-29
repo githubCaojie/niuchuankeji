@@ -27,6 +27,9 @@ export default {
 .cooperate {
   background-image: url('../../../assets/img/cooperateBanner.jpg');
 }
+.none {
+  background-image: url('../../../assets/img/newsBanner.jpg');
+}
 .about {
   background-image: url('../../../assets/img/aboutUsBanner.jpg');
 }

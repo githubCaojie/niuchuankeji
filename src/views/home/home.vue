@@ -59,6 +59,7 @@ export default {
     getHomeBanner () {
       getHomeBanner().then(res => {
         this.banners = res.data;
+        console.log(res)
       })
     },
     getHomeProduct() {

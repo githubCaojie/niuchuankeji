@@ -13,7 +13,7 @@ const routes = [
     name: 'home',
     component: () => import('../views/home/home'),
     meta: { 
-      title: '纽川技术有限公司'
+      title: '官方-纽川技术有限公司'
     }
   },
   {

@@ -94,7 +94,7 @@ export default {
 
 <style lang="less" scoped>
 .cooperation-content {
-  background-color: #01267f;
+  background-color: var(--home-element-background);;
   .bg-box {
     position: absolute;
     width: 100%;
@@ -125,6 +125,9 @@ export default {
       .el-col-6 {
         margin-bottom: 20px;
       }
+    }
+    .el-row:nth-last-child(1) {
+      padding-bottom: 30px;
     }
   }
 }

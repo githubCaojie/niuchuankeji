@@ -167,10 +167,10 @@ export default {
 
 <style lang="less" scoped>
 footer {
-  background-color: #022066;
+  background-color: #122a62;
   color: #ffffff;
   .copyright {
-    background-color: #02133e;
+    background-color: #151f37;
   }
   a {
     color: #ffffff;

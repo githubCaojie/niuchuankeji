@@ -6,13 +6,15 @@
     </m-home-content-title>
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="item in cases" :key="item.id">
-        <div class="mask"></div>
-        <p class="img img-box">
-          <van-image fit="cover" :src="item.bigPicture" />
-        </p>
-        <div class="text-box">
-          <div class="title">{{item.successfulCasesName}}</div>
-          <div class="content">{{item.briefIntroduction}}</div>
+        <div @click="goCasesContent(item.id)">
+          <div class="mask"></div>
+          <p class="img img-box">
+            <van-image fit="cover" :src="item.bigPicture" />
+          </p>
+          <div class="text-box">
+            <div class="title">{{item.successfulCasesName}}</div>
+            <div class="content">{{item.briefIntroduction}}</div>
+          </div>
         </div>
       </van-swipe-item>
     </van-swipe>
@@ -45,6 +47,18 @@ export default {
         name: '成功案例',
         translation: 'CASES'
       }
+    }
+  },
+  methods: {
+    goCasesContent(id) {
+      let routeUrl = this.$router.resolve({
+        path: 'contentDetail',
+        query: {
+          type: 'cases',
+          casesId: id
+        }
+      })
+      window.open(routeUrl.href, '_blank');
     }
   }
 }

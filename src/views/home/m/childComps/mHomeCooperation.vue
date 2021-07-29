@@ -7,14 +7,18 @@
       </m-home-content-title>
       <van-swipe :autoplay="3000">
         <van-swipe-item v-for="item in copperation" :key="item.id">
-          <p class="img"><van-image fit="cover" width="100%" :src="item.bigPicture" /></p>
-          <div class="bg"></div>
-          <div class="title-text">{{item.title}}</div>
+          <div @click="goCooperation">
+            <p class="img"><van-image fit="cover" width="100%" :src="item.bigPicture" /></p>
+            <div class="bg"></div>
+            <div class="title-text">{{item.title}}</div>
+          </div>
         </van-swipe-item>
       </van-swipe>
       <van-row gutter="15">
         <van-col span="12" v-for="item in partner" :key="item.id">
-          <p class="img"><van-image :src="item.image" /></p>
+          <div @click="goCooperation">
+            <p class="img"><van-image :src="item.image" /></p>
+          </div>
         </van-col>
       </van-row>
     </div>
@@ -56,13 +60,20 @@ export default {
         translation: 'COPPERATION'
       },
     }
+  },
+  methods: {
+    goCooperation() {
+      this.$router.push({
+        path: "cooperation"
+      })
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
 .cooperation-content {
-  background-color: #01267f;
+  background-color: var(--home-element-background);;
   .m {
     margin: 0 0.27rem;
     .bg {

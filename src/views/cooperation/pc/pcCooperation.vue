@@ -12,10 +12,14 @@
       <div class="class">
         <el-row :gutter="60">
           <el-col :span="8" v-for="item in cooperation" :key="item.id">
-              <div class="item">
+              <div
+                class="item"
+                @mouseover="itemOver(item.id)"
+                @mouseleave="itemLeave"
+              >
                 <pc-child-img-item>
                     <div slot="img">
-                      <pc-image :src="item.bigPicture" height="220px"/>
+                      <pc-image :src="item.bigPicture" height="220px" :active="mouseImgid === item.id"/>
                     </div>
                     <div class="text" slot="centent">
                       <p class="title text1hidden">{{item.title}}</p>
@@ -34,9 +38,12 @@
         <div class="content">覆盖法律行业及律师，公司法务和视频监控行业、智能终端行业</div>
         <el-row :gutter="66">
           <el-col v-for="item in partner" :key="item.id" :span="6">
-            <a href="javascript:;">
-              <pc-image :src="item.image" height="100px" :isborder="true"/>
-            </a>
+            <div
+              @mouseover="itemOver(item.id)"
+              @mouseleave="itemLeave"
+            >
+              <pc-image :src="item.image" height="100px" :isborder="true" :active="mouseImgid === item.id"/>
+            </div>
           </el-col>
         </el-row>
       </div>
@@ -78,9 +85,20 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      mouseImgid: ''  
+    }
+  },
   methods: {
     goCooperationDeyail(id) {
       this.$emit('goCooperationDeyail', id)
+    },
+    itemOver(id) {
+      this.mouseImgid = id
+    },
+    itemLeave() {
+      this.mouseImgid = ''
     }
   }
 }
@@ -126,6 +144,7 @@ export default {
     display: block;
     border: 1px solid #e2e2e2;
     margin-bottom: 60px;
+    cursor: pointer;
     .text {
       border-top: 1px solid #e2e2e2;
       color: #666666;
@@ -148,7 +167,7 @@ export default {
       padding: 30px;
       button {
         font-size: 14px;
-        background-color: #024eb7;
+        background-color: var(--home-element-background);;
         border-radius: unset;
         color: #ffffff;
         width: 100px;

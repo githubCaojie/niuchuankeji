@@ -6,13 +6,15 @@
   </m-home-content-title>
   <van-row>
     <van-col span="24" v-for="item in news" :key="item.id" class="item">
-      <p class="img">
-        <van-image fit="cover" :src="item.bigPicture"/>
-      </p>
-      <div class="text-box">
-        <div class="title">{{item.title}}</div>
-        <div class="date">{{item.time}}</div>
-        <div class="content">{{item.briefIntroduction}}</div>
+      <div @click="goNewsContent(item.id)">
+        <p class="img">
+          <van-image fit="cover" :src="item.bigPicture"/>
+        </p>
+        <div class="text-box">
+          <div class="title">{{item.title}}</div>
+          <div class="date">{{item.time}}</div>
+          <div class="content">{{item.briefIntroduction}}</div>
+        </div>
       </div>
     </van-col>
   </van-row>
@@ -46,6 +48,18 @@ export default {
         translation: 'NEWS'
       }
     }
+  },
+  methods: {
+    goNewsContent(id) {
+      let routeUrl = this.$router.resolve({
+        path: 'contentDetail',
+        query: {
+          type: 'news',
+          newsId: id
+        }
+      })
+      window.open(routeUrl.href, '_blank');
+    },
   }
 }
 </script>
@@ -55,13 +69,14 @@ export default {
 .m {
   margin: 0 0.27rem;
   .item {
-    background-color: #014eb6;
+    background-color: var(--home-element-background);;
     margin-bottom: 0.27rem;
     color: #ffffff;
     .text-box {
-      padding: 0.37rem 0.27rem;
+      padding: 0.37rem 0.37rem;
       .title {
         font-size: 0.45rem;
+        line-height: 0.6rem;
       }
       .date {
         font-size: 0.37rem;
@@ -70,6 +85,7 @@ export default {
       .content {
         height: auto;
         font-size: 0.35rem;
+        line-height: 0.6rem;
       }
     }
   }

@@ -11,11 +11,16 @@
             v-for="item in cases.list"
             :key="item.id"
             :span="6"
+            :class="{in: mouseImgid === item.id}"
           >
-          <div class="item">
+          <div
+            class="item"
+            @mouseover="itemOver(item.id)"
+            @mouseleave="itemLeave"
+          >
             <pc-child-img-item>
               <div slot="img">
-                <pc-image :src="item.bigPicture" height="200px"/>
+                <pc-image :src="item.bigPicture" height="200px" :active="mouseImgid === item.id"/>
               </div>
               <div class="text" slot="centent">
                 <p class="title text1hidden">{{item.successfulCasesName}}</p>
@@ -67,6 +72,7 @@ export default {
   data () {
     return {
       casesPage: 1,
+      mouseImgid: ''
     }
   },
   methods: {
@@ -75,6 +81,13 @@ export default {
     },
     goCasesDetail(id) {
       this.$emit('goCasesDetail', id)
+    },
+    itemOver(id) {
+      console.log(id)
+      this.mouseImgid = id
+    },
+    itemLeave() {
+      this.mouseImgid = ''
     }
   }
 }
@@ -94,6 +107,7 @@ export default {
     display: block;
     border: 1px solid #e2e2e2;
     margin-bottom: 60px;
+    cursor: pointer;
     .text {
       border-top: 1px solid #e2e2e2;
       color: #666666;
@@ -116,7 +130,7 @@ export default {
       padding: 30px;
       button {
         font-size: 14px;
-        background-color: #024eb7;
+        background-color: var(--home-element-background);;
         border-radius: unset;
         color: #ffffff;
         width: 100px;

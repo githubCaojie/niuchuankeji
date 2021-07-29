@@ -12,10 +12,14 @@
             :key="item.id"
             :span="6"
           >
-          <div class="item" @click="goProductDetail(item.id)">
+          <div class="item"
+            @click="goProductDetail(item.id)"
+            @mouseover="itemOver(item.id)"
+            @mouseleave="itemLeave"
+          >
             <pc-child-img-item>
               <div slot="img">
-                <pc-image :src="item.bigPicture" height="200px"/>
+                <pc-image :src="item.bigPicture" height="200px" :active="mouseImgid === item.id"/>
               </div>
               <div class="text" slot="centent">
                 <p class="title text3hidden">{{item.productName}}</p>
@@ -65,6 +69,7 @@ export default {
     return {
       productCenterNumber: {},
       productPage: 1,
+      mouseImgid: ''
     }
   },
   methods: {
@@ -73,6 +78,12 @@ export default {
     },
     goProductDetail(id) {
       this.$emit('goProductDetail', id)
+    },
+    itemOver(id) {
+      this.mouseImgid = id
+    },
+    itemLeave() {
+      this.mouseImgid = ''
     }
   }
 }

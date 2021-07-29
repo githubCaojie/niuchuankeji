@@ -8,7 +8,7 @@
       <div class="content">
         <div v-for="item in detail" :key="item.id">
           <h3 class="title">{{item.successfulCasesName || item.title || item.productName || item.solutionName}}</h3>
-          <div class="label"><span>发布时间：{{item.time}}</span><span>来源：{{item.source}}</span></div>
+          <div class="label"><span v-show="item.time">发布时间：{{item.time}}</span><span v-show="source">来源：{{item.source}}</span></div>
           <div class="text" v-html="item.introduce || item.newsIntroduce">
           </div>
         </div>

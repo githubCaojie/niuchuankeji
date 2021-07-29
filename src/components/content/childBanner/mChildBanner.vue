@@ -33,6 +33,9 @@ export default {
 .news {
   background-image: url('../../../assets/img/newsBanner.jpg');
 }
+.none {
+  background-image: url('../../../assets/img/newsBanner.jpg');
+}
 .cooperate {
   background-image: url('../../../assets/img/cooperateBanner.jpg');
 }

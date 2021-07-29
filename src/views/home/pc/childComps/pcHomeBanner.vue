@@ -2,9 +2,9 @@
   <div class="banner">
     <el-carousel width="100%" class="hidden-xs hidden-sm" :height="imgHeight+ 'px'">
       <el-carousel-item v-for="item in banners" :key="item.id" width="100%">
-        <a @click.prevent="bannerClick(item.urlpath)">
+        <div @click="bannerClick(item)" class="item">
           <el-image :style="{height: imgHeight+'px',width: '100%'}" fit="cover" :src="item.image"></el-image>
-        </a>
+        </div>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -29,8 +29,21 @@ export default {
     imgLoad() {
       this.imgHeight = parseInt(document.body.clientWidth*0.45);
     },
-    bannerClick(url) {
-      console.log(url)
+    bannerClick(item) {
+      this.$store.commit('updateChildBanner', this.childBanner);
+      this.$store.commit('updateBreadCrumb', this.breadCrumb);
+      if(item.urlpath == '' || item.urlpath == null) {
+        localStorage.setItem('bannerArticle',item.article)
+        let routeUrl = this.$router.resolve({
+          path: 'contentDetail',
+          query: {
+            type: 'none'
+          }
+        })
+        window.open(routeUrl.href, '_blank')
+      }else {
+        window.open(item.urlpath)
+      }
     }
   },
   mounted() {
@@ -43,4 +56,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.item {
+  cursor: pointer;
+}
 </style>

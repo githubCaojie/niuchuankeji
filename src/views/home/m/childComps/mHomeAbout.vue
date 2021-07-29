@@ -13,8 +13,9 @@
         v-for="(item,i) in panelData"
         :key="i"
       >
-        <van-image :src="item.img"
-        />
+        <div @click="goAbout(item.type)">
+          <van-image :src="item.img"/>
+        </div>
       </van-col>
     </van-row>
   </div>
@@ -62,6 +63,24 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    goAbout(type) {
+      if(type === 'recruitments') {
+        let routeUrl = this.$router.resolve({
+          path: 'recruitments'
+        })
+        window.open(routeUrl.href, '_blank');
+      }else {
+        let routeUrl =this.$router.resolve({
+          path: 'aboutus',
+          query: {
+            type: type
+          }
+        })
+        window.open(routeUrl.href, '_blank');
+      }
+    }
   }
 }
 </script>
@@ -80,6 +99,7 @@ export default {
     .about-copy {
       font-size: 0.35rem;
       text-indent: 0.7rem;
+      line-height: 0.6rem;
     }
     .panel-item {
       padding: 1rem 0.3rem;

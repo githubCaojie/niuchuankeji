@@ -13,8 +13,7 @@
             <el-image fit="cover" :src="require('@/assets/img/' + item.iconUrl)"/>
             <div class="text-box">
               <h4 class="title">{{item.name}}</h4>
-              <div class="sild">
-                <span v-for="(noteItem, i) in item.note" :key="i">{{noteItem}}</span>
+              <div class="sild" v-html="item.note">
               </div>
             </div>
           </div>
@@ -72,17 +71,17 @@ export default {
       classData: [
         {
           name: '智能终端',
-          note: ['自助服务终端','智能会议交互终端','多媒体智能终端','桌面智能终端'],
+          note: '<p><span>自助服务终端</span><span>智能会议交互终端</span></p><p><span>多媒体智能终端</span><span>桌面智能终端</span></p>',
           iconUrl:'HomeSasesIcon/products_01.png',
         },
         {
           name: '集成系统',
-          note: ['协同办公方案','移动办公解决方案','信息系统容灾备案解决方案'],
+          note: '<p><span>协同办公方案</span><span>移动办公解决方案</span></p><p><span>信息系统容灾备案解决方案</span></p>',
           iconUrl:'HomeSasesIcon/products_02.png',
         },
         {
           name: '运维服务',
-          note: ['可视化运维管理平台解决方案','质效型运维管理解决方案'],
+          note: '<p><span>可视化运维管理平台解决方案</span></p><p><span></span>质效型运维管理解决方案</p>',
           iconUrl:'HomeSasesIcon/products_03.png',
         }
       ],
@@ -127,6 +126,7 @@ export default {
     }
     .text-box {
       text-align: center;
+      margin-left: 5px;
       .title {
         font-size: 24px;
         margin-bottom: 27px;
@@ -134,10 +134,12 @@ export default {
       .sild {
         font-size: 14px;
         line-height: 20px;
-        span {
-          text-overflow:ellipsis;
-          white-space:nowrap;
-          margin: 0 2.5px;
+        /deep/ p {
+          span {
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            margin: 0 2.5px;
+          }
         }
       }
     }

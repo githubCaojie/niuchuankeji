@@ -27,11 +27,6 @@ export default {
     pcHomeAbout,
     pcHomeCooperation
   },
-  data () {
-    return {
-      imgHeight: "",
-    }
-  },
   props: {
     banners: {
       type: Array,
@@ -75,20 +70,6 @@ export default {
         return []
       }
     }
-  },
-  methods: {
-    imgLoad() {
-      this.imgHeight = parseInt(document.body.clientWidth*0.45);
-    },
-    bannerClick(url) {
-      console.log(url)
-    }
-  },
-  mounted() {
-    this.imgLoad()
-    window.addEventListener("resize", () => {
-      this.imgLoad()
-    })
   }
 }
 </script>
